@@ -35,21 +35,48 @@ def handle_shutdown_confirmation(call, bot, is_authorized):
         bot.send_message(call.message.chat.id, "You are not authorized to use this bot.")
     bot.answer_callback_query(call.id) # Acknowledge the callback
 
-def _wish_hour_wise():
-   hour = datetime.now().hour
-   if 5 <= hour < 12:
-     return "Good Morning! 🌄 Boss"
-   elif 12 <= hour < 17:
-     return "Good Afternoon! 🙋‍♀️ Boss!"
-   elif 17 <= hour < 21:
-     return "Good Evening! 💕 Boss"
-   else:
-     return "Hope you had a great day! 🌙 Boss!"
+def _wish_hour_wise(username):
+    morning_wishes = [
+        f"Good Morning! 🌄 {username}",
+        f"Rise and shine! ☀️ {username}",
+        f"Wishing you a productive morning! 💼 {username}",
+        f"Top of the morning to you! 🌅 {username}"
+    ]
+    afternoon_wishes = [
+        f"Good Afternoon! 🙋‍♀️ {username}!",
+        f"Hope your afternoon is going well! 🌞 {username}",
+        f"Keep up the great work this afternoon! 💪 {username}",
+        f"Enjoy your afternoon! 🍵 {username}"
+    ]
+    evening_wishes = [
+        f"Good Evening! 💕 {username}",
+        f"Hope you had a wonderful day! 🌆 {username}",
+        f"Relax and enjoy your evening! 🌙 {username}",
+        f"Wishing you a peaceful evening! 🕯️ {username}"
+    ]
+    night_wishes = [
+        f"Hope you had a great day! 🌙 {username}!",
+        f"Good night and sweet dreams! 😴 {username}",
+        f"Rest well, {username}! 🌜",
+        f"Wishing you a restful night! 💤 {username}"
+    ]
+
+    hour = datetime.now().hour
+    if 5 <= hour < 12:
+        return random.choice(morning_wishes)
+    elif 12 <= hour < 17:
+        return random.choice(afternoon_wishes)
+    elif 17 <= hour < 21:
+        return random.choice(evening_wishes)
+    else:
+        return random.choice(night_wishes)
 
 def send_welcome_message(bot, CHAT_IDS):
-    wish = _wish_hour_wise()
     for chat_id in CHAT_IDS:
         try:
+            user = bot.get_chat(chat_id)
+            username = user.first_name or user.username or "there"
+            wish = _wish_hour_wise(username)
             bot.send_message(chat_id, wish)
         except Exception as e:
             print(f"Could not send welcome message to {chat_id}: {e}")

@@ -33,12 +33,13 @@ def is_authorized(chat_id):
 @bot.message_handler(commands=['start'])
 def handle_start_command(message):
     if is_authorized(message.chat.id):
+        first_name = message.from_user.first_name or ""
         welcome_messages = [
-            "Iris is awake and ready to assist! ✨",
-            "Hello! Iris at your service.😊",
-            "👋 Hi there! Iris is online and listening.",
-            "Ready to go! 🚀 Iris is here for you.",
-            "Iris is up and running. 💡"
+            f"Iris is awake and ready to assist, {first_name}! ✨",
+            f"Hello {first_name}! Iris at your service.😊",
+            f"👋 Hi {first_name}! Iris is online and listening.",
+            f"Ready to go, {first_name}! 🚀 Iris is here for you.",
+            f"Iris is up and running, {first_name}. 💡"
         ]
         bot.send_message(message.chat.id, random.choice(welcome_messages))
     else:
