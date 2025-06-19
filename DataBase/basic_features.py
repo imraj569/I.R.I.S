@@ -2,21 +2,6 @@ import subprocess, os, random
 from telebot import types
 from datetime import datetime
 
-# SUGGESTION: Use constants for static data instead of functions.
-# It's more conventional and slightly more performant.
-WELCOME_STICKERS = [
-    "CAACAgIAAxkBAAJf5WfmtVXidHnj67roSiWpylWDS9O5AAK0JwACvjCQSk_nZILWHmN8NgQ",
-    "CAACAgIAAxkBAAJf-2fmtw-rwqAifoZyrfqMMYapm9z9AAK_LAACTfaRSh-GXIPitZ5INgQ",
-    "CAACAgIAAxkBAAJf72fmtYVTX-Lp4fq9QyUiMsM_eopcAAJ0MwACyRiRSmcbBQMdUrBJNgQ"
-]
-
-INTERACTION_STICKERS = [
-    "CAACAgUAAxkBAAJfL2fibm3cr9uiuMDNRGet9J6B889jAAIQFwACoeIRVyFZ0CncMXujNgQ",
-    "CAACAgIAAxkBAAJf5GfmtUZY74OoyVzSIQPEs6YeCNNWAAIbKgACAheQSpxgKEc6i5NTNgQ",
-    "CAACAgIAAxkBAAJf-WfmtvmYSILvqv7ZtzoaKxG_WNqQAAKUKwACFuqQSuNJI0k3VjqWNgQ",
-    "CAACAgIAAxkBAAJf-2fmtw-rwqAifoZyrfqMMYapm9z9AAK_LAACTfaRSh-GXIPitZ5INgQ"
-]
-
 def handle_lock_command(message, bot, is_authorized):
     if is_authorized(message.chat.id):
         bot.send_message(message.chat.id, "PC is Locked 🔐")
@@ -65,7 +50,6 @@ def send_welcome_message(bot, CHAT_IDS):
     wish = _wish_hour_wise()
     for chat_id in CHAT_IDS:
         try:
-            bot.send_sticker(chat_id, random.choice(WELCOME_STICKERS))
             bot.send_message(chat_id, wish)
         except Exception as e:
             print(f"Could not send welcome message to {chat_id}: {e}")

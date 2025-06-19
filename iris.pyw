@@ -8,9 +8,7 @@ from DataBase.basic_features import (
     handle_lock_command, 
     handle_shutdown_command, 
     handle_shutdown_confirmation,
-    send_welcome_message,
-    INTERACTION_STICKERS, # Use constants
-    WELCOME_STICKERS # Use constants
+    send_welcome_message
 )
 
 load_dotenv()
@@ -35,7 +33,6 @@ def is_authorized(chat_id):
 @bot.message_handler(commands=['start'])
 def handle_start_command(message):
     if is_authorized(message.chat.id):
-        bot.send_sticker(message.chat.id, random.choice(WELCOME_STICKERS))
         welcome_messages = [
             "Iris is awake and ready to assist! ✨",
             "Hello! Iris at your service.😊",
@@ -73,7 +70,7 @@ def handle_url_callback(call):
         if url_to_handle:
             webbrowser.open(url_to_handle)
             bot.edit_message_text("🌐 URL opened successfully.", chat_id, call.message.message_id)
-            bot.send_sticker(chat_id, random.choice(INTERACTION_STICKERS))
+
         else:
             bot.edit_message_text("⚠️ No URL found to open. Please send a URL again.", chat_id, call.message.message_id)
 
@@ -81,7 +78,7 @@ def handle_url_callback(call):
         if url_to_handle:
             pyperclip.copy(url_to_handle)
             bot.edit_message_text("📋 URL copied to clipboard.", chat_id, call.message.message_id)
-            bot.send_sticker(chat_id, random.choice(INTERACTION_STICKERS))
+
         else:
             bot.edit_message_text("⚠️ No URL found to copy. Please send a URL again.", chat_id, call.message.message_id)
 
@@ -121,7 +118,6 @@ def handle_text_message(message):
         # Handle normal text
         pyperclip.copy(cleaned_text)
         bot.send_message(message.chat.id, "✅ Text copied to clipboard. 📋")
-        bot.send_sticker(message.chat.id, random.choice(INTERACTION_STICKERS))
 
 @bot.message_handler(content_types=['document', 'photo', 'video', 'voice', 'audio'])
 def process_uploaded_files(message):  

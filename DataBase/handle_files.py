@@ -1,7 +1,6 @@
 import os
 import random
 import time
-from DataBase.basic_features import INTERACTION_STICKERS
 
 def sanitize_filename(filename):
     """Removes characters that are illegal in Windows filenames."""
@@ -21,7 +20,7 @@ def _download_and_save_file(message, bot, file_id, file_path, download_path, ori
             f.write(downloaded_file)
 
         bot.send_message(message.chat.id, f"File '{os.path.basename(download_path)}' downloaded successfully! ✅🎉")
-        bot.send_sticker(message.chat.id, random.choice(INTERACTION_STICKERS))
+    
     except Exception as e:
         error_message = f"Error downloading file: {str(e)}"
         print(error_message)
