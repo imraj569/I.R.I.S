@@ -1,0 +1,6 @@
+psutil
+colorama
+py-telegram-bot-api
+python-dotenv
+pyperclip
+pyautogui
